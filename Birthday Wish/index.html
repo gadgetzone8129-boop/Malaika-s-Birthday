@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malaika's Little Universe 💖</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --pink:#ff8fca;
+  --rose:#ff4f9a;
+  --purple:#b18aff;
+  --gold:#ffe4a3;
+  --cream:#fff0f7;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  min-height:100vh;
+  background:#080310;
+  color:white;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+}
+button { font-family:inherit; }
+#sky {
+  position:fixed; inset:0; z-index:-10;
+  background:
+    radial-gradient(ellipse at 20% 15%,#42104d 0%,transparent 38%),
+    radial-gradient(ellipse at 85% 65%,#37104a 0%,transparent 40%),
+    linear-gradient(140deg,#080310,#160821 55%,#090312);
+}
+.aurora {
+  position:fixed; width:65vw; height:40vh;
+  filter:blur(85px); opacity:.22; z-index:-8;
+  background:#e7359d; border-radius:50%;
+  animation:aurora 12s infinite alternate ease-in-out;
+}
+.aurora.a { top:5%; left:-20%; }
+.aurora.b { right:-25%; bottom:5%; background:#8857ff; animation-delay:-5s; }
+@keyframes aurora {
+  to { transform:translate(20vw,12vh) rotate(30deg) scale(1.3); }
+}
+.star {
+  position:fixed; border-radius:50%; background:white;
+  box-shadow:0 0 8px white; pointer-events:none; z-index:-3;
+  animation:twinkle var(--duration,3s) infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%,100% { opacity:.15; transform:scale(.6); }
+  50% { opacity:1; transform:scale(1.5); }
+}
+.shooting-star {
+  position:fixed; width:120px; height:2px;
+  background:linear-gradient(90deg,white,transparent);
+  transform:rotate(-35deg); pointer-events:none; z-index:-2;
+  animation:shoot 1.3s linear forwards;
+}
+@keyframes shoot {
+  from { opacity:0; translate:0 0; }
+  15% { opacity:1; }
+  to { opacity:0; translate:-350px 220px; }
+}
+.moon {
+  position:fixed; top:6%; right:8%; width:75px; height:75px;
+  border-radius:50%; background:#fff3d3;
+  box-shadow:0 0 35px #fff1d0,0 0 90px #ffd1f0;
+  z-index:-2; animation:moonFloat 5s infinite ease-in-out;
+}
+.moon:after {
+  content:""; position:absolute; width:70px; height:70px;
+  left:22px; top:-8px; border-radius:50%; background:#10071a;
+}
+@keyframes moonFloat { 50% { transform:translateY(-10px); } }
+
+.page {
+  min-height:100svh; padding:75px 20px 110px;
+  display:none; align-items:center; justify-content:center;
+  text-align:center; position:relative; overflow:hidden;
+}
+.page.active { display:flex; animation:reveal .9s ease both; }
+@keyframes reveal {
+  from { opacity:0; transform:translateY(20px) scale(.985); }
+  to { opacity:1; transform:none; }
+}
+.content { width:min(800px,100%); margin:auto; position:relative; z-index:2; }
+.eyebrow {
+  color:#ffacd4; font-size:11px; letter-spacing:5px;
+  text-transform:uppercase; margin-bottom:18px;
+}
+h1,h2,h3 { font-family:'Cormorant Garamond',serif; }
+h1 {
+  font-size:clamp(65px,14vw,135px); line-height:.9;
+  font-weight:600; margin:20px 0;
+  background:linear-gradient(100deg,#fff,#ffb7dc,#e1bdff,#fff0bf);
+  background-size:250%; color:transparent;
+  -webkit-background-clip:text;
+  animation:shine 7s linear infinite;
+}
+@keyframes shine { to { background-position:250%; } }
+h2 { font-size:clamp(42px,8vw,70px); line-height:1; margin:16px 0; }
+p { line-height:1.9; color:#f5dced; }
+.lead { max-width:620px; margin:20px auto; font-size:17px; }
+.emoji-row { font-size:25px; letter-spacing:6px; margin:24px 0; }
+.primary {
+  padding:14px 28px; border:1px solid #ffc1e2;
+  border-radius:50px; color:white; font-size:15px;
+  background:linear-gradient(120deg,#ff478f,#a04ff2,#ed65b8);
+  background-size:200%; cursor:pointer; margin:15px 6px 0;
+  box-shadow:0 0 25px #ff4f9a44;
+  transition:transform .25s,box-shadow .25s;
+}
+.primary:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 0 38px #ff4f9a88; }
+.primary:disabled { opacity:.5; cursor:default; transform:none; }
+.secondary {
+  background:#ffffff0b; border:1px solid #ffadd455;
+  border-radius:50px; color:#ffe3f1; padding:12px 22px;
+  cursor:pointer; margin-top:14px;
+}
+.progress-wrap {
+  position:fixed; z-index:100; top:0; left:0; width:100%;
+  height:3px; background:#ffffff12;
+}
+#progress { height:100%; width:14.28%; background:linear-gradient(90deg,#ff5ca9,#c7a0ff,#ffe4a3); transition:width .5s; }
+.page-number {
+  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+  color:#edc9df; font-size:11px; letter-spacing:2px; z-index:80;
+}
+.music {
+  position:fixed; right:17px; bottom:17px; z-index:200;
+  width:52px; height:52px; border:1px solid #ffc2e4;
+  border-radius:50%; background:#9d3f9e; color:white;
+  font-size:22px; cursor:pointer; box-shadow:0 0 25px #ff4f9a66;
+}
+.petal {
+  position:fixed; top:-25px; z-index:50; pointer-events:none;
+  animation:fall var(--fall,8s) linear forwards;
+}
+@keyframes fall {
+  to { transform:translate(var(--drift,80px),110vh) rotate(650deg); opacity:.1; }
+}
+
+/* Blooming garden */
+.garden {
+  height:145px; display:flex; justify-content:center; align-items:flex-end;
+  gap:23px; margin:20px 0;
+}
+.bloom { position:relative; width:40px; height:125px; transform-origin:bottom; animation:sway 3s infinite ease-in-out; }
+.bloom:nth-child(even) { animation-delay:-1.3s; }
+.stem { position:absolute; bottom:0; left:19px; width:3px; height:75px; background:linear-gradient(#8ed47a,#286d48); border-radius:5px; }
+.flower-head { position:absolute; top:10px; left:0; width:40px; height:40px; animation:bloom 2s both; }
+.flower-head i {
+  position:absolute; width:17px; height:24px; left:12px; top:0;
+  background:var(--petal,#ff8fc8); border-radius:50% 50% 35% 35%;
+  transform-origin:bottom center;
+}
+.flower-head i:nth-child(2) { transform:rotate(60deg); }
+.flower-head i:nth-child(3) { transform:rotate(120deg); }
+.flower-head i:nth-child(4) { transform:rotate(180deg); }
+.flower-head i:nth-child(5) { transform:rotate(240deg); }
+.flower-head i:nth-child(6) { transform:rotate(300deg); }
+.flower-head b { position:absolute; left:12px; top:12px; width:16px; height:16px; border-radius:50%; background:#ffe18a; z-index:2; }
+@keyframes bloom { from { transform:scale(0) rotate(-35deg); } to { transform:scale(1); } }
+@keyframes sway { 50% { transform:rotate(5deg); } }
+
+/* Magic door */
+.door-stage { width:250px; height:350px; perspective:1100px; margin:28px auto 10px; position:relative; }
+.door-room {
+  position:absolute; inset:0; border-radius:7px;
+  background:radial-gradient(circle at 50% 40%,#ffb7e6,#b84bb9 35%,#281039 78%);
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  box-shadow:0 0 55px #ed70ca55;
+}
+.door-room span { font-size:48px; animation:heartbeat 1.6s infinite; }
+.door {
+  position:absolute; inset:0; transform-origin:left center;
+  transition:transform 2s cubic-bezier(.77,0,.18,1);
+  border:9px solid #d9ad68;
+  background:linear-gradient(100deg,#58163f,#b84c80,#70204c);
+  z-index:3;
+}
+.door:before { content:""; position:absolute; inset:18px; border:2px solid #f2cf88; }
+.door:after { content:""; position:absolute; right:25px; top:50%; width:14px; height:14px; border-radius:50%; background:#ffe59b; box-shadow:0 0 16px #ffe59b; }
+.door.open { transform:rotateY(-115deg); }
+.key { font-size:55px; display:inline-block; transition:1.2s; }
+.key.turn { transform:translateX(38px) rotate(70deg) scale(1.2); }
+
+/* Question */
+.question-card,.glass {
+  padding:32px 22px; border-radius:30px;
+  border:1px solid #ffc4e43d; background:#ffffff09;
+  backdrop-filter:blur(12px); box-shadow:0 0 55px #ed50a514;
+}
+.heartbeat { font-size:65px; animation:heartbeat 1.2s infinite; }
+@keyframes heartbeat { 0%,100% { transform:scale(1); } 20% { transform:scale(1.16); } 35% { transform:scale(1); } }
+.button-zone { height:115px; position:relative; margin-top:12px; }
+.yes,.no {
+  position:absolute; top:28px; padding:13px 27px;
+  border:0; border-radius:40px; cursor:pointer; font-size:16px;
+}
+.yes { left:calc(50% - 120px); background:linear-gradient(120deg,#ff3d91,#ff86be); color:white; box-shadow:0 0 20px #ff4f9a66; }
+.no { left:calc(50% + 20px); background:#ffffff13; color:white; border:1px solid #ffffff2c; }
+
+/* Letter */
+.letter-card {
+  max-width:650px; margin:auto; padding:35px 28px;
+  border-radius:12px; background:linear-gradient(140deg,#fff5fa,#ffe0ee);
+  color:#61223f; box-shadow:0 25px 75px #0007;
+  animation:letterFloat 4s infinite ease-in-out;
+}
+@keyframes letterFloat { 50% { transform:translateY(-7px) rotate(.4deg); } }
+.letter-card h2 { color:#a42e67; }
+.letter-text { font-family:'Cormorant Garamond',serif; font-size:23px; line-height:1.7; text-align:left; color:#632b49; }
+#typed { white-space:pre-line; }
+.cursor { display:inline-block; width:2px; height:22px; background:#bc4583; animation:blink .8s infinite; }
+@keyframes blink { 50% { opacity:0; } }
+
+/* Orbit universe */
+.orbit-universe { position:relative; width:290px; height:290px; margin:35px auto; }
+.sun {
+  position:absolute; width:90px; height:90px; left:100px; top:100px;
+  display:grid; place-items:center; font-size:43px; border-radius:50%;
+  background:radial-gradient(circle,#fff1b8,#ff8fca);
+  box-shadow:0 0 30px #ff9ad8,0 0 80px #bd71ff77;
+  animation:heartbeat 2s infinite;
+}
+.orbit { position:absolute; border:1px solid #ffb6df66; border-radius:50%; inset:30px; animation:spin 12s linear infinite; }
+.orbit.two { inset:0; animation-duration:19s; animation-direction:reverse; }
+.planet { position:absolute; top:-12px; left:50%; font-size:24px; }
+.orbit.two .planet { top:50%; left:-12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Gift */
+.gift-scene { height:240px; display:grid; place-items:center; perspective:700px; }
+.gift { font-size:130px; cursor:pointer; filter:drop-shadow(0 0 22px #ff75bb); animation:giftBounce 2s infinite; transition:transform .6s; }
+.gift.open { transform:rotate(-12deg) scale(1.25); }
+@keyframes giftBounce { 50% { transform:translateY(-12px) rotate(3deg); } }
+.gift-message { display:none; color:#ffe0f0; font-family:'Cormorant Garamond',serif; font-size:32px; margin-top:10px; animation:reveal 1s both; }
+
+/* Finale */
+.final-title { font-size:clamp(54px,11vw,100px); }
+.final-stars { font-size:34px; line-height:2; }
+
+/* Reduce motion for accessibility */
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after { animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; }
+}
+@media(max-width:500px) {
+  .moon { width:55px; height:55px; right:7%; }
+  .moon:after { width:53px; height:53px; left:17px; }
+  .door-stage { width:225px; height:320px; }
+  .garden { gap:11px; transform:scale(.9); }
+  .letter-card { padding:27px 20px; }
+  .letter-text { font-size:21px; }
+  .orbit-universe { transform:scale(.85); margin:15px auto; }
+}
+</style>
+</head>
+
+<body>
+<div id="sky"></div>
+<div class="aurora a"></div>
+<div class="aurora b"></div>
+<div class="moon"></div>
+
+<div class="progress-wrap"><div id="progress"></div></div>
+<div class="page-number" id="pageNumber">CHAPTER 01 / 07</div>
+
+<audio id="music" loop preload="auto">
+  <source src="birthday-music.mp3" type="audio/mpeg">
+</audio>
+<button class="music" id="musicButton" onclick="toggleMusic()" aria-label="Toggle music">♫</button>
+
+<!-- PAGE 1 -->
+<section class="page active" id="page1">
+  <div class="content">
+    <div class="emoji-row">🌙 ✨ 🦋 🌸 💖 🌸 🦋 ✨ 🌙</div>
+    <div class="eyebrow">A secret universe, made for one person</div>
+    <h1>Malaika</h1>
+    <div class="heartbeat">💗</div>
+    <p class="lead">Somewhere between a thousand stars and a million dreams, there is a little universe that reminds me of you. 🌌</p>
+    <div class="emoji-row">🌷 💌 🌹 🥹 🌹 💌 🌷</div>
+    <p>Tonight, you are the main character of a little fairytale. 👑✨</p>
+    <button class="primary" onclick="startStory()">Enter My Universe 🌠 →</button>
+    <p style="font-size:12px;margin-top:14px;color:#d8b7d1">🎵 A little music makes the magic even sweeter</p>
+  </div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="page2">
+  <div class="content">
+    <div class="eyebrow">Chapter 01 · The enchanted entrance 🔐</div>
+    <h2>A Door to My Heart 💖</h2>
+    <p class="lead">Every fairytale has a secret door. Behind this one is a little world created just for you. 🗝️🌸</p>
+    <div class="door-stage">
+      <div class="door-room">
+        <span>💖</span>
+        <p>YOUR LITTLE UNIVERSE</p>
+        <div style="font-size:27px;margin-top:10px">🌹✨🌹</div>
+      </div>
+      <div class="door" id="door"></div>
+    </div>
+    <div class="key" id="key">🗝️</div>
+    <p id="doorText">Ready to unlock a little magic? ✨</p>
+    <button class="primary" id="unlockButton" onclick="unlockDoor()">Turn the Magic Key 🔑</button>
+    <br>
+    <button class="primary" id="doorNext" style="display:none" onclick="nextPage()">Step Inside 💕 →</button>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="page3">
+  <div class="content question-card">
+    <div class="emoji-row">🥹 💐 💗 🌷 💗 💐 🥹</div>
+    <div class="heartbeat">💞</div>
+    <div class="eyebrow">Chapter 02 · A tiny question</div>
+    <h2>Malaika, my favourite person...</h2>
+    <p class="lead">If I could make one wish for our future, it would be to keep choosing each other, through every season of life. 🌙💍</p>
+    <p style="font-size:22px">Will you stay by my side forever? 🥺❤️</p>
+    <div class="button-zone" id="buttonZone">
+      <button class="yes" onclick="sayYes()">YES! 🥰💖</button>
+      <button class="no" id="noButton">NO 🙈</button>
+    </div>
+    <p id="yesMessage" style="display:none">YAAAAAY! 🎉💖🌹 You just made my universe brighter! 🦋✨</p>
+    <button class="primary" id="questionNext" style="display:none" onclick="nextPage()">Keep Our Story Going 💌 →</button>
+  </div>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page" id="page4">
+  <div class="content">
+    <div class="eyebrow">Chapter 03 · Words from my heart 💌</div>
+    <div class="letter-card">
+      <div style="font-size:30px;margin-bottom:12px">🌹💌🌷</div>
+      <h2>To My Beautiful Malaika</h2>
+      <div class="letter-text" id="typed"></div>
+      <span class="cursor" id="cursor"></span>
+      <div style="font-size:25px;margin-top:20px">💖 🥹 🌸 ❤️ 🌸 🥹 💖</div>
+    </div>
+    <button class="primary" onclick="nextPage()">A Little More Magic ✨ →</button>
+  </div>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page" id="page5">
+  <div class="content">
+    <div class="eyebrow">Chapter 04 · Our little universe 🪐</div>
+    <h2>Two Hearts, One Sky 🌌</h2>
+    <p class="lead">Imagine a little universe where every star is a reason to smile, every planet is a dream, and every orbit leads back to love. 💫</p>
+    <div class="orbit-universe">
+      <div class="sun">💖</div>
+      <div class="orbit"><span class="planet">🌸</span></div>
+      <div class="orbit two"><span class="planet">🦋</span></div>
+    </div>
+    <div class="glass">
+      <p>🌙 You are my calm on difficult days.</p>
+      <p>✨ You are the sparkle in ordinary moments.</p>
+      <p>🌷 You make the future feel beautiful.</p>
+      <p>💞 And you will always have a special place in my heart.</p>
+    </div>
+    <div class="emoji-row">🌎 💗 🪐 ✨ 🌠 🪐 💗 🌎</div>
+    <button class="primary" onclick="nextPage()">Discover Your Garden 🌸 →</button>
+  </div>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page" id="page6">
+  <div class="content">
+    <div class="eyebrow">Chapter 05 · A garden that blooms for you 🌷</div>
+    <h2>Flowers, Just Like You 🌹</h2>
+    <p class="lead">If every kind thought about you became a flower, this garden would never stop growing. 🌸💕</p>
+    <div class="garden">
+      <div class="bloom" style="--petal:#ff83bc"><div class="flower-head"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="stem"></div></div>
+      <div class="bloom" style="height:145px;--petal:#d9a0ff"><div class="flower-head"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="stem" style="height:95px"></div></div>
+      <div class="bloom" style="--petal:#ffb2d5"><div class="flower-head"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="stem"></div></div>
+      <div class="bloom" style="height:140px;--petal:#ffa9a9"><div class="flower-head"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="stem" style="height:90px"></div></div>
+      <div class="bloom" style="--petal:#e9a2ff"><div class="flower-head"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><div class="stem"></div></div>
+    </div>
+    <div class="glass">
+      <p>🌹 One flower for your smile.</p>
+      <p>🌷 One for your kindness.</p>
+      <p>🌸 One for all the little things that make you, YOU.</p>
+      <p>💐 And a whole garden for the love I wish to give you.</p>
+    </div>
+    <button class="primary" onclick="nextPage()">Open Your Little Gift 🎁 →</button>
+  </div>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page" id="page7">
+  <div class="content">
+    <div class="eyebrow">Chapter 06 · A little surprise, just for you 🎀</div>
+    <h2>A Gift from My Heart 🎁</h2>
+    <p class="lead">There's no price tag on the best gifts. Some are simply feelings, wishes, and promises wrapped in love. 💝</p>
+    <div class="gift-scene">
+      <div class="gift" id="gift" onclick="openGift()">🎁</div>
+    </div>
+    <p id="giftHint">Tap the gift to open it, birthday girl! 👑💖</p>
+    <div class="gift-message" id="giftMessage">
+      Your surprise is... a promise. 💌<br>
+      I will keep finding new ways to make you smile. 🥹🌹
+    </div>
+    <button class="primary" onclick="nextPage()">One Last Thing, My Love 🌙 →</button>
+  </div>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page" id="page8">
+  <div class="content">
+    <div class="eyebrow">The final chapter · But never the end ♾️</div>
+    <div class="final-stars">✨ 🌸 💖 🦋 🌹 🦋 💖 🌸 ✨</div>
+    <h1 class="final-title">Happy Birthday,<br>Malaika</h1>
+    <p class="lead">May your days be soft, your dreams be bright, your heart feel loved, and your smile find a thousand reasons to shine. 🎂🌷</p>
+    <div class="emoji-row">🎀 💐 🌙 💞 🌹 ✨ 🥹 💗 🦋</div>
+    <div class="glass">
+      <p>Of all the stars in the sky, my favourite little light is you. 🌟</p>
+      <p>Of all the places life could take me, I hope it gives us countless beautiful moments. 🌎💖</p>
+      <p>And of all the words I could leave you with, these will always matter most...</p>
+      <h2 style="color:#ffc3e2;margin-top:20px">I love you, Malaika. ❤️‍🔥</h2>
+      <p style="margin-top:12px">Today, tomorrow, and in all the little tomorrows after that. ♾️🌸</p>
+    </div>
+    <div class="emoji-row">🌹💖🌷✨🦋🎆🎂🎆🦋✨🌷💖🌹</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#ffc1e0">Forever yours, Abdul ❤️</p>
+    <button class="primary" onclick="celebrate()">Celebrate Our Little Universe 🎆💖</button>
+    <br>
+    <button class="secondary" onclick="restartStory()">Experience the Magic Again ↺</button>
+  </div>
+</section>
+
+<script>
+/* Create the starry sky */
+for(let i=0;i<145;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const size=1+Math.random()*2.5;
+  s.style.width=size+'px';
+  s.style.height=size+'px';
+  s.style.left=Math.random()*100+'vw';
+  s.style.top=Math.random()*100+'vh';
+  s.style.setProperty('--duration',(2+Math.random()*4)+'s');
+  s.style.animationDelay=Math.random()*4+'s';
+  document.body.appendChild(s);
+}
+
+/* Shooting stars */
+function shootingStar(){
+  const s=document.createElement('div');
+  s.className='shooting-star';
+  s.style.left=(25+Math.random()*90)+'vw';
+  s.style.top=(Math.random()*55)+'vh';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),1400);
+}
+setInterval(shootingStar,3500);
+
+/* Falling rose petals */
+function makePetal(){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.textContent=['🌸','🌷','💗','✨','🌹'][Math.floor(Math.random()*5)];
+  p.style.left=Math.random()*100+'vw';
+  p.style.fontSize=(12+Math.random()*15)+'px';
+  p.style.setProperty('--fall',(6+Math.random()*7)+'s');
+  p.style.setProperty('--drift',(Math.random()*180-90)+'px');
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),14000);
+}
+setInterval(makePetal,650);
+
+/* Music: try autoplay, but browsers may block it */
+const music=document.getElementById('music');
+const musicButton=document.getElementById('musicButton');
+let musicStarted=false;
+
+function startMusic(){
+  music.play().then(()=>{
+    musicStarted=true;
+    musicButton.textContent='🎵';
+  }).catch(()=>{
+    musicButton.textContent='🔈';
+  });
+}
+window.addEventListener('load',()=>{
+  startMusic();
+});
+function toggleMusic(){
+  if(music.paused){
+    startMusic();
+  }else{
+    music.pause();
+    musicButton.textContent='🔇';
+  }
+}
+
+/* Page navigation */
+let currentPage=1;
+const totalPages=8;
+function showPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  currentPage=n;
+  document.getElementById('progress').style.width=(n/totalPages*100)+'%';
+  document.getElementById('pageNumber').textContent=
+    'CHAPTER '+String(n).padStart(2,'0')+' / '+String(totalPages).padStart(2,'0');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===4) typeLetter();
+}
+function nextPage(){
+  if(currentPage<totalPages) showPage(currentPage+1);
+}
+function startStory(){
+  startMusic();
+  showPage(2);
+}
+
+/* Magical door */
+let doorUnlocked=false;
+function unlockDoor(){
+  if(doorUnlocked)return;
+  doorUnlocked=true;
+  const key=document.getElementById('key');
+  const door=document.getElementById('door');
+  const btn=document.getElementById('unlockButton');
+  btn.disabled=true;
+  btn.textContent='The magic is awakening... ✨';
+  key.classList.add('turn');
+  setTimeout(()=>door.classList.add('open'),1100);
+  setTimeout(()=>{
+    document.getElementById('doorText').textContent='The door is open. Welcome to my heart! 💖🌹';
+    btn.style.display='none';
+    document.getElementById('doorNext').style.display='inline-block';
+    for(let i=0;i<18;i++)setTimeout(makePetal,i*80);
+  },3000);
+}
+
+/* Playful NO button; YES stays accessible */
+const noButton=document.getElementById('noButton');
+const zone=document.getElementById('buttonZone');
+function dodgeNo(){
+  const maxX=Math.max(0,zone.clientWidth-noButton.offsetWidth);
+  const maxY=Math.max(0,zone.clientHeight-noButton.offsetHeight);
+  noButton.style.left=Math.random()*maxX+'px';
+  noButton.style.top=Math.random()*maxY+'px';
+}
+noButton.addEventListener('pointerenter',dodgeNo);
+noButton.addEventListener('click',e=>{
+  e.preventDefault();
+  dodgeNo();
+});
+noButton.addEventListener('touchstart',e=>{
+  e.preventDefault();
+  dodgeNo();
+},{passive:false});
+
+function sayYes(){
+  document.getElementById('yesMessage').style.display='block';
+  document.getElementById('questionNext').style.display='inline-block';
+  burstHearts(65);
+}
+
+/* Typewriter letter */
+const letterText=
+`My beautiful Malaika,
+
+If I could give you one thing today, it would be the chance to see yourself through my eyes. You would understand why your smile is so precious to me. ❤️
+
+You make ordinary moments feel special, and you remind me that some of life's loveliest things are the little ones: a smile, a kind word, a shared laugh, a moment of peace. 🌷
+
+I cannot promise that every day will be perfect, but I hope I can keep showing up with kindness, patience, laughter, and love.
+
+Today is your birthday, but you are a gift I feel lucky to celebrate. 🎂💖
+
+May this new year of your life bring you confidence, peace, beautiful surprises, and all the happiness your heart can hold.
+
+Happy Birthday, my love. I am cheering for you, today and always.
+
+With all my love,
+Abdul ❤️`;
+
+let typed=false;
+function typeLetter(){
+  if(typed)return;
+  typed=true;
+  const el=document.getElementById('typed');
+  const cursor=document.getElementById('cursor');
+  let i=0;
+  function step(){
+    if(i<letterText.length){
+      el.textContent+=letterText.charAt(i++);
+      setTimeout(step,24);
+    }else{
+      cursor.style.display='none';
+    }
+  }
+  step();
+}
+
+/* Gift reveal */
+let giftOpened=false;
+function openGift(){
+  if(giftOpened)return;
+  giftOpened=true;
+  document.getElementById('gift').classList.add('open');
+  document.getElementById('gift').textContent='💝';
+  document.getElementById('giftHint').textContent='A little promise, wrapped with love...';
+  document.getElementById('giftMessage').style.display='block';
+  burstHearts(40);
+}
+
+/* Hearts and sparkles */
+function burstHearts(amount=45){
+  const emojis=['💖','💕','💗','❤️','🌸','🌹','✨','🦋','💫'];
+  for(let i=0;i<amount;i++){
+    const h=document.createElement('div');
+    h.className='petal';
+    h.style.position='fixed';
+    h.style.left='50%';
+    h.style.top='48%';
+    h.style.animation='none';
+    h.style.fontSize=(18+Math.random()*20)+'px';
+    h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.transition='transform 1.8s ease-out,opacity 1.8s ease-out';
+    h.style.opacity='1';
+    document.body.appendChild(h);
+    requestAnimationFrame(()=>{
+      h.style.transform=`translate(${Math.random()*window.innerWidth-window.innerWidth/2}px,${Math.random()*window.innerHeight-window.innerHeight/2}px) rotate(${Math.random()*360}deg) scale(${.5+Math.random()*1.5})`;
+      h.style.opacity='0';
+    });
+    setTimeout(()=>h.remove(),1900);
+  }
+}
+function celebrate(){
+  burstHearts(100);
+  for(let i=0;i<30;i++)setTimeout(makePetal,i*70);
+  for(let i=0;i<12;i++)setTimeout(shootingStar,i*180);
+}
+function restartStory(){
+  doorUnlocked=false;
+  typed=false;
+  giftOpened=false;
+  document.getElementById('door').classList.remove('open');
+  document.getElementById('key').classList.remove('turn');
+  document.getElementById('unlockButton').style.display='inline-block';
+  document.getElementById('unlockButton').disabled=false;
+  document.getElementById('unlockButton').textContent='Turn the Magic Key 🔑';
+  document.getElementById('doorNext').style.display='none';
+  document.getElementById('doorText').textContent='Ready to unlock a little magic? ✨';
+  document.getElementById('yesMessage').style.display='none';
+  document.getElementById('questionNext').style.display='none';
+  document.getElementById('typed').textContent='';
+  document.getElementById('cursor').style.display='inline-block';
+  document.getElementById('gift').textContent='🎁';
+  document.getElementById('gift').classList.remove('open');
+  document.getElementById('giftHint').textContent='Tap the gift to open it, birthday girl! 👑💖';
+  document.getElementById('giftMessage').style.display='none';
+  showPage(1);
+}
+</script>
+</body>
+</html>
